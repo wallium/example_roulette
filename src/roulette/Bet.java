@@ -6,7 +6,6 @@ package roulette;
  * 
  * @author Robert C. Duvall
  */
-
 public abstract class Bet {
     private String myDescription;
     private int myOdds;
@@ -35,8 +34,17 @@ public abstract class Bet {
     public String getDescription () {
         return myDescription;
     }
-    
-    public abstract String placeBet();
-    
-    public abstract boolean betIsMade(Wheel myWheel, String betChoice);
+
+    /**
+     * Place bet by prompting user for the specific information need to complete this bet.
+     */
+    public abstract String place ();
+
+    /**
+     * Checks if bet is won or lost given the user's choice and result of spinning the wheel.
+     *
+     * @param betChoice specific value user chose to try to win the bet
+     * @param wheel information needed to check if bet won or lost
+     */
+    public abstract boolean isMade (String betChoice, Wheel wheel);
 }

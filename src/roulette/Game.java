@@ -11,11 +11,11 @@ import util.ConsoleReader;
 public class Game {
     // name of the game
     private static final String DEFAULT_NAME = "Roulette";
-    // bets player can make
-    private Bet[] myPossibleBets = { 
-        new RedBlackBet("Red or Black",1),
-        new OddEvenBet("Odd or Even", 1),
-        new ThreeBet("Three in a Row", 11)
+    // add new bet subclasses here
+    private Bet[] myPossibleBets = {
+        new RedBlack("Red or Black", 1),
+        new OddEven("Odd or Even", 1),
+        new ThreeConsecutive("Three in a Row", 11),
     };
     private Wheel myWheel;
 
@@ -44,15 +44,15 @@ public class Game {
     public void play (Gambler player) {
         int amount = ConsoleReader.promptRange("How much do you want to bet",
                                                0, player.getBankroll());
-        Bet whichBet = promptForBet();
-        String betChoice = whichBet.placeBet();
+        Bet b = promptForBet();
+        String betChoice = b.place();
 
         System.out.print("Spinning ...");
         myWheel.spin();
         System.out.println(String.format("Dropped into %s %d", myWheel.getColor(), myWheel.getNumber()));
-        if (whichBet.betIsMade(myWheel, betChoice)) {
+        if (b.isMade(betChoice, myWheel)) {
             System.out.println("*** Congratulations :) You win ***");
-            amount *= whichBet.getOdds();
+            amount *= b.getOdds();
         }
         else {
             System.out.println("*** Sorry :( You lose ***");
@@ -69,7 +69,7 @@ public class Game {
         for (int k = 0; k < myPossibleBets.length; k++) {
             System.out.println(String.format("%d) %s", (k + 1), myPossibleBets[k].getDescription()));
         }
-        return myPossibleBets[ConsoleReader.promptRange("Please make a choice", 1, myPossibleBets.length) - 1];
+        int response = ConsoleReader.promptRange("Please make a choice", 1, myPossibleBets.length);
+        return myPossibleBets[response - 1];
     }
-
 }
