@@ -6,10 +6,14 @@ import roulette.bets.ThreeConsecutive;
 import util.ConsoleReader;
 
 public class Factory {
+	private String[] betClassNames = {"RedBlack", "OddEven", "ThreeConsecutive"};
+	private String[] betInputNames = {"Red or Black", "Odd or Even", "Three in a Row"};
+	private int[] betInputNum = {1, 1, 11};
+
     private Bet[] myPossibleBets = {
-            new RedBlack("Red or Black", 1),
-            new OddEven("Odd or Even", 1),
-            new ThreeConsecutive("Three in a Row", 11),
+    		(Bet) Class.forName(betClassNames[0]).getConstructor(String.class, Integer.TYPE).newInstance(betInputNames[0], betInputNum[0]),
+    		(Bet) Class.forName(betClassNames[0]).getConstructor(String.class, Integer.TYPE).newInstance(betInputNames[1], betInputNum[1]),
+    		(Bet) Class.forName(betClassNames[0]).getConstructor(String.class, Integer.TYPE).newInstance(betInputNames[2], betInputNum[2])
     };
     
     /**
